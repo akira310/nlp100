@@ -7,12 +7,10 @@ import re
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 with open("../data/jawiki-country.json.uk", "r", encoding="utf8") as f:
-    line = f.readlines()
-
-ptrn = r"(\[\[\s*category\s*:\s*)(.*)(\]\])"
-rptrn = re.compile(ptrn, re.IGNORECASE)
-for l in line:
-    s = re.search(rptrn, l)
-    if s:
-        print(l)
+    ptrn = r"(\[\[\s*category\s*:\s*)(.*)(\]\])"
+    rptrn = re.compile(ptrn, re.IGNORECASE)
+    for l in f:
+        s = re.search(rptrn, l)
+        if s:
+            print(l)
 
