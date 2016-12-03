@@ -6,10 +6,15 @@ import redis
 
 
 def main():
+    conn = redis.Redis(host='localhost', port=6379)
+    conn.flushall()
+
     with gzip.open("../data/artist.json.gz", "rt", encoding="utf-8") as f:
         for line in f:
-            print(json.loads(line, encoding="utf-8")["name"])
-            break
+            artist =json.loads(line, encoding="utf-8")
+            if "name" in artist:
+                value = artist["area"] if "area" in artist else ""
+                conn.set(artist["name"], value)
 
 def test():
     conn = redis.Redis(host='localhost', port=6379)

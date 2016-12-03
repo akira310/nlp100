@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Form
+================================================== -->
+<div class="container">
+    <p> 検索条件 </p>
+
+    <form action="/post" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label for="name">name</label>
+            <div>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="alias">artist.alias</label>
+            <div>
+                <input type="text" class="form-control" id="alias" name="alias" placeholder="Artist.alias">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="area">area</label>
+            <div>
+                <input type="text" class="form-control" id="area" name="area" placeholder="Area">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tag">tag</label>
+            <div>
+                <input type="text" class="form-control" id="tag" name="tag" placeholder="Tag">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="limit">検索結果上限</label>
+            <div>
+                <input type="radio" name="limit" value="10" checked> 10件
+                <input type="radio" name="limit" value="50"> 50件
+                <input type="radio" name="limit" value="100"> 100件
+            </div>
+            <div>
+                <input type="radio" name="sort" value="1"> 昇順
+                <input type="radio" name="sort" value="-1" checked> 降順
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default">送信する</button>
+    </form>
+</div>
+<HR>
+<div>
+    <form action="/reset" method="reset" class="form-horizontal">
+        <p> 検索結果 </p>
+        <button type="submit" class="btn btn-default">リセット</button>
+        <table>
+            <TR>
+                <TH>No.</TH>
+                <TH>Rating</TH>
+                <TH>Name</TH>
+                <TH>Area</TH>
+                <TH>Tag</TH>
+                <TH>Name.alias</TH>
+            </TR>
+            {% if artists %}
+                {% for artist in artists %}
+                <TR>
+                    <TD>{{loop.index}}</TD>
+                    <TD>{{artist[0]}}</TD>
+                    <TD>{{artist[1]}}</TD>
+                    <TD>{{artist[3]}}</TD>
+                    <TD> <select>
+                        {% for tag in artist[4] %}
+                            <option value = {{ tag }}>{{ tag }}</option>
+                        {% endfor %}
+                    </TD> </select>
+                    <TD> <select>
+                        {% for alias in artist[2] %}
+                            <option value = {{ alias }}>{{ alias }}</option>
+                        {% endfor %}
+                    </select> </TD>
+                </TR>
+                {% endfor %}
+            {% endif %}
+        </table>
+</div>
+{% endblock %}
